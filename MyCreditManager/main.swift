@@ -13,6 +13,9 @@ let INVALID_INPUT = "입력이 잘못되었습니다. 다시 확인해주세요.
 let INPUT_NAME = "추가할 학생의 이름을 입력해주세요"
 let ADD_NAME_SUCCESS = " 학생을 추가했습니다."
 let ADD_NAME_FAIL = "은 이미 존재하는 학생입니다. 추가하지 않습니다."
+let INPUT_NAME_TO_DELETE = "삭제할 학생의 이름을 입력해주세요"
+let DELETE_NAME_SUCCESS = " 학생을 삭제하였습니다."
+let DELETE_NAME_FAIL = " 학생을 찾지 못했습니다."
 let EXIT = "프로그램을 종료합니다..."
 
 var runMyCreditManager = true
@@ -34,6 +37,15 @@ while runMyCreditManager {
             }
         } else {
             print(INVALID_INPUT)
+        }
+    case "2": //학생삭제
+        print(INPUT_NAME_TO_DELETE)
+        let name = readLine()!
+        if creditManager[name] != nil {
+            creditManager.removeValue(forKey: name)
+            print(name + DELETE_NAME_SUCCESS)
+        } else {
+            print(name + DELETE_NAME_FAIL)
         }
     case "X":
         print(EXIT)
