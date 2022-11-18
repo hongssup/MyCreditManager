@@ -17,6 +17,8 @@ let INPUT_NAME_TO_DELETE = "삭제할 학생의 이름을 입력해주세요"
 let DELETE_NAME_SUCCESS = " 학생을 삭제하였습니다."
 let DELETE_NAME_FAIL = " 학생을 찾지 못했습니다."
 let INPUT_CREDIT = "성적을 추가할 학생의 이름, 과목 이름, 성적(A+, A, F 등)을 띄어쓰기로 구분하여 차례로 작성해주세요.\n입력예) Micky Swift A+\n만약에 학생의 성적 중 해당 과목이 존재하면 기존 점수가 갱신됩니다."
+let INPUT_CREDIT_TO_DELETE = "성적을 삭제할 학생의 이름, 과목 이름을 띄어쓰기로 구분하여 차례로 작성해주세요.\n입력예) Micky Swift"
+let INVALID_NAME = " 학생을 찾지 못했습니다."
 let EXIT = "프로그램을 종료합니다..."
 
 var runMyCreditManager = true
@@ -53,11 +55,27 @@ while runMyCreditManager {
         print(INPUT_CREDIT)
         let credit = readLine()!
         let creditArr = credit.split(separator: " ").map{ String($0) }
-        print(creditArr)
         if creditArr.count == 3 {
             if creditManager[creditArr[0]] != nil, creditArr[1].isValidInput(), grade[creditArr[2]] != nil {
                 creditManager[creditArr[0]]!.updateValue(creditArr[2], forKey: creditArr[1])
                 print("\(creditArr[0]) 학생의 \(creditArr[1]) 과목이 \(creditArr[2])로 추가(변경)되었습니다.")
+                break
+            }
+        }
+        print(INVALID_INPUT)
+    case "4": //성적삭제
+        print(INPUT_CREDIT_TO_DELETE)
+        let delete = readLine()!
+        let deleteArr = delete.split(separator: " ").map{ String($0) }
+        if deleteArr.count == 2 {
+            if let credit = creditManager[deleteArr[0]] {
+                if credit[deleteArr[1]] != nil {
+                    creditManager[deleteArr[0]]!.removeValue(forKey: deleteArr[1])
+                    print("\(deleteArr[0]) 학생의 \(deleteArr[1]) 과목의 성적이 삭제되었습니다.")
+                    break
+                }
+            } else {
+                print(deleteArr[0] + INVALID_NAME)
                 break
             }
         }
