@@ -16,10 +16,12 @@ let ADD_NAME_FAIL = "은 이미 존재하는 학생입니다. 추가하지 않�
 let INPUT_NAME_TO_DELETE = "삭제할 학생의 이름을 입력해주세요"
 let DELETE_NAME_SUCCESS = " 학생을 삭제하였습니다."
 let DELETE_NAME_FAIL = " 학생을 찾지 못했습니다."
+let INPUT_CREDIT = "성적을 추가할 학생의 이름, 과목 이름, 성적(A+, A, F 등)을 띄어쓰기로 구분하여 차례로 작성해주세요.\n입력예) Micky Swift A+\n만약에 학생의 성적 중 해당 과목이 존재하면 기존 점수가 갱신됩니다."
 let EXIT = "프로그램을 종료합니다..."
 
 var runMyCreditManager = true
-var creditManager = [String:[String:Double]]()
+var creditManager = [String:[String:String]]()
+let grade: [String:Double] = ["A+":4.5, "A":4, "B+":3.5, "B":3, "C+":2.5, "C":2, "D":1.5, "D+":1, "F":0]
 
 while runMyCreditManager {
     print(INPUT_MENU)
@@ -47,6 +49,19 @@ while runMyCreditManager {
         } else {
             print(name + DELETE_NAME_FAIL)
         }
+    case "3": //성적추가
+        print(INPUT_CREDIT)
+        let credit = readLine()!
+        let creditArr = credit.split(separator: " ").map{ String($0) }
+        print(creditArr)
+        if creditArr.count == 3 {
+            if creditManager[creditArr[0]] != nil, creditArr[1].isValidInput(), grade[creditArr[2]] != nil {
+                creditManager[creditArr[0]]!.updateValue(creditArr[2], forKey: creditArr[1])
+                print("\(creditArr[0]) 학생의 \(creditArr[1]) 과목이 \(creditArr[2])로 추가(변경)되었습니다.")
+                break
+            }
+        }
+        print(INVALID_INPUT)
     case "X":
         print(EXIT)
         runMyCreditManager = false
