@@ -19,6 +19,7 @@ let DELETE_NAME_FAIL = " 학생을 찾지 못했습니다."
 let INPUT_CREDIT = "성적을 추가할 학생의 이름, 과목 이름, 성적(A+, A, F 등)을 띄어쓰기로 구분하여 차례로 작성해주세요.\n입력예) Micky Swift A+\n만약에 학생의 성적 중 해당 과목이 존재하면 기존 점수가 갱신됩니다."
 let INPUT_CREDIT_TO_DELETE = "성적을 삭제할 학생의 이름, 과목 이름을 띄어쓰기로 구분하여 차례로 작성해주세요.\n입력예) Micky Swift"
 let INVALID_NAME = " 학생을 찾지 못했습니다."
+let INPUT_GET_CREDIT = "평점을 알고싶은 학생의 이름을 입력해주세요"
 let EXIT = "프로그램을 종료합니다..."
 
 var runMyCreditManager = true
@@ -76,6 +77,25 @@ while runMyCreditManager {
                 }
             } else {
                 print(deleteArr[0] + INVALID_NAME)
+                break
+            }
+        }
+        print(INVALID_INPUT)
+    case "5": //평점보기
+        print(INPUT_GET_CREDIT)
+        let name = readLine()!
+        if name.isValidInput() {
+            if let credit = creditManager[name] {
+                var total: Double = 0
+                for (key, value) in credit {
+                    print("\(key): \(value)")
+                    total += grade[value]!
+                }
+                let average = total/Double(credit.count)
+                print("평점 : \(floor(average*100)/100)")
+                break
+            } else {
+                print(name + INVALID_NAME)
                 break
             }
         }
