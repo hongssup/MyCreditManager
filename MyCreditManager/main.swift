@@ -30,11 +30,20 @@ var runMyCreditManager = true
 var creditManager = [String:[String:String]]()
 let grade: [String:Double] = ["A+":4.5, "A":4, "B+":3.5, "B":3, "C+":2.5, "C":2, "D":1.5, "D+":1, "F":0]
 
+enum MenuType: String {
+    case addStudent = "1"
+    case deleteStudent = "2"
+    case addGrade = "3"
+    case deleteGrade = "4"
+    case getCredit = "5"
+    case exit = "X"
+}
+
 while runMyCreditManager {
     print(INPUT_MENU)
     let input = readLine()!
     switch input {
-    case "1": //학생추가
+    case MenuType.addStudent.rawValue: //학생추가
         print(INPUT_NAME)
         let name = readLine()!
         if name.isValidInput() {
@@ -47,7 +56,7 @@ while runMyCreditManager {
         } else {
             print(INVALID_INPUT)
         }
-    case "2": //학생삭제
+    case MenuType.deleteStudent.rawValue: //학생삭제
         print(INPUT_NAME_TO_DELETE)
         let name = readLine()!
         if creditManager[name] != nil {
@@ -56,7 +65,7 @@ while runMyCreditManager {
         } else {
             print(name + DELETE_NAME_FAIL)
         }
-    case "3": //성적추가
+    case MenuType.addGrade.rawValue: //성적추가
         print(INPUT_CREDIT)
         let credit = readLine()!
         let creditArr = credit.split(separator: " ").map{ String($0) }
@@ -68,7 +77,7 @@ while runMyCreditManager {
             }
         }
         print(INVALID_INPUT)
-    case "4": //성적삭제
+    case MenuType.deleteGrade.rawValue: //성적삭제
         print(INPUT_CREDIT_TO_DELETE)
         let delete = readLine()!
         let deleteArr = delete.split(separator: " ").map{ String($0) }
@@ -85,7 +94,7 @@ while runMyCreditManager {
             }
         }
         print(INVALID_INPUT)
-    case "5": //평점보기
+    case MenuType.getCredit.rawValue: //평점보기
         print(INPUT_GET_CREDIT)
         let name = readLine()!
         if name.isValidInput() {
@@ -104,7 +113,7 @@ while runMyCreditManager {
             }
         }
         print(INVALID_INPUT)
-    case "X":
+    case MenuType.exit.rawValue:
         print(EXIT)
         runMyCreditManager = false
     default:
